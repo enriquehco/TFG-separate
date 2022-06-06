@@ -18,7 +18,7 @@ function boxes = OBCA(matriz,nodos)
         %candidate box, build said box around the node with distance k
         box = build_c_box(n,k,full_m,distancias);
         [temp2,idx2] = sort(box(2,:));
-        C_box = box(:,idx2) %sort by f (2nd row)
+        C_box = box(:,idx2); %sort by f (2nd row)
         tam_cb = size(C_box);
         for i=1:tam_cb(2)
             if ~ismember(C_box(1,i),box(1)) 
@@ -35,7 +35,7 @@ function boxes = OBCA(matriz,nodos)
                 end
             end
         end
-        for p=i:tam_cb(2)
+        for p=1:tam_cb(2)
             fidx = find(full_m(1,:) == box(1,p));
             full_m(2,fidx) = full_m(2,fidx) + 1;
         end
