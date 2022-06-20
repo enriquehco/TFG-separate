@@ -4,6 +4,8 @@ function boxes = memb(matriz,nodos)
     G = graph(matriz);
     distancias = distances(G);
     tammat = size(matriz);
+    valores = [];
+    iteraciones = 1:1:tammat(1);
     
     for k=1:tammat(2)
         U = nodos; %list of uncovered nodes
@@ -32,6 +34,30 @@ function boxes = memb(matriz,nodos)
                 end
             end
         end
+        num_boxes = size(boxes);
+        valores(k) = num_boxes(2);
     end
+    boxCovering = valores;
+
+    x = iteraciones;
+    y = boxCovering(iteraciones);
+    
+    Lb = x;
+    Nb = y;
+    
+    N = log10(Nb)';
+    R = log10(Lb)';
+    figure;
+    set(gcf,'color',[1 1 1]);
+    set(gca, 'FontSize',15);
+    p = scatter(R, N,'filled');
+    title("Escala de cajas");
+    hold on;
+    
+    dtt = p.DataTipTemplate;
+    dtt.DataTipRows(1).Label = "Lb";
+    dtt.DataTipRows(1).Value = Lb;
+    dtt.DataTipRows(2).Label = "Nb";
+    dtt.DataTipRows(2).Value = Nb;
 end
 
