@@ -41,6 +41,12 @@ function boxes = remcc(matriz,nodos)
             U = setdiff(U,maxnodeball);
         end
         %box forming of memb with all reached centers
+        index = 1:tammat(1)+1:tammat(1)*tammat(2);
+        distancias(index)=0;
+        boxes = form_boxes_from_centers(C,nodos,distancias,k);
+        
+        num_boxes = size(boxes);
+        valores(k) = num_boxes(2);
     end
 end
 

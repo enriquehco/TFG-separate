@@ -20,20 +20,8 @@ function boxes = memb(matriz,nodos)
             %calculate p_box should return nodes 'covered' by p
             U = setdiff(U,p_box);
         end
-        cdist = calc_dists(nodos,C,distancias,k); %returns list of closest center node per node
-        C_bis = cdist(:,cdist(3,:)~=0);
-        cbtam = size(C_bis);
-        ctam = size(C);
-        for i=1:cbtam(2)
-            smallers = cdist(:,cdist(3,:)<C_bis(3,i));
-            stam = size(smallers);
-            smaller = smallers(:,randi(stam(2)));
-            for j=1:ctam(2)
-                if ismember(smaller(2,:),boxes{j})
-                    boxes{j}(end+1) = C_bis(1,i);
-                end
-            end
-        end
+        boxes = form_boxes_from_centers(C,nodos,distancias,k);
+        
         num_boxes = size(boxes);
         valores(k) = num_boxes(2);
     end
