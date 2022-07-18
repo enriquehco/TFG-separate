@@ -1,15 +1,20 @@
-function devuelve = greedy_coloring(matriz, nodos, aux_g, neigh, tb, ordering)
+function devuelve = greedy_coloring(matriz, nodos, tb, aux_g, neigh )
     limit = size(matriz);
     threshold = 0.5;
     valores = [];
     iteraciones = [1:1:limit(1)];
     matriz(matriz>=threshold)=1;matriz(matriz<threshold)=0;
-    if ismember(nargin,[2 3])
+    if nargin == 2
         onetime=false;
     else
-        onetime=true;
-        G_b = aux_g;
-        neighbors = neigh;
+        if ~exist('neigh','var')
+            onetime = true;
+            [G_b,neighbors] = auxiliary_graph(matriz,tb);
+        else
+            onetime=true;
+            G_b = aux_g;
+            neighbors = neigh;
+        end
     end
     for k=1:limit(1)
         if ~onetime
@@ -32,7 +37,7 @@ function devuelve = greedy_coloring(matriz, nodos, aux_g, neigh, tb, ordering)
         max_col = max(colors);
         valores(k) = max_col;
         if onetime
-            devuelve = max_col;
+            devuelve = colors;
             break
         end
     end
